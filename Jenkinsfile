@@ -1,17 +1,17 @@
 pipeline{
-    agent {label 'node2'}
+    agent any
     environment{
-        PROJECT_KEY="java-calculator-k8s"
+        PROJECT_KEY="Demo-Project"
     }
     stages{
         stage('SCM'){
             steps{
-                git branch: 'main', url: 'https://github.com/Agasthyahm/calculator-java.git'
+                git branch: 'main', url: 'https://github.com/Amith373/SonarrQube_Jenkins.git'
             }
         }
         stage('sonar analysis'){
             steps{
-                withSonarQubeEnv('sonar-k8s'){
+                withSonarQubeEnv('SonarQube-K8s'){
                     sh """ mvn clean verify sonar:sonar \
                     -Dsonar.projectKey=${PROJECT_KEY} \
                     -Dsonar.projectName=${PROJECT_KEY}
