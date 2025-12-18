@@ -11,7 +11,7 @@ pipeline{
         }
         stage('sonar analysis'){
             steps{
-                withSonarQubeEnv('sonarqube-k8s'){
+                withSonarQubeEnv('SonarQube-K8s'){
                    sh """ mvn clean verify sonar:sonar \
                     -Dsonar.projectKey=${PROJECT_KEY} \
                     -Dsonar.projectName=${PROJECT_KEY}
@@ -19,17 +19,17 @@ pipeline{
                 }
             }
         }
-         stage('Quality gate validate'){
+         stage('Quality gate'){
             steps{
                 timeout(time: 5, unit: 'MINUTES'){
                     waitForQualityGate abortPipeline: true
                 }
             }
                   post{
-                    success{
-                           echo "Quality Gate Passed"
+                     notBuilt{
+                           echo "Quality Gate success"
                         }
-                   failure{
+                     aborted{
                            echo "Quality Gate Failed"
                      }
                 }
